@@ -87,7 +87,7 @@ This is an accessary version of the WHU-TLC SatMVS dataset. We fitted each image
 
 ** 0, 1 and 2 represents the three views respectively.
 
-[1] Kai Zhang, Noah Snavely, and Jin Sun. Leveraging vision reconstruction pipelines for satellite imagery. In Proceedings of the IEEE/CVF International Conference on Computer Vision Workshops, pages 2139-2148, 2019.
+[1] Kai Zhang, Noah Snavely, and Jin Sun. Leveraging vision reconstruction pipelines for satellite imagery. In Proceedings of the IEEE/CVF International Conference on Computer Vision Workshops, pages 2139-2148, 2019.
 
 ### PFM file
 
