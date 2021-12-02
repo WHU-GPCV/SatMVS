@@ -1,4 +1,12 @@
-# WHU-TLC dataset
+# SatMVS
+
+## Code
+
+The code is still being integrated. We will release it soon.
+
+## WHU-TLC dataset
+
+You can download **WHU-TLC dataset** from [http://gpcv.whu.edu.cn/data/whu_tlc.html](http://gpcv.whu.edu.cn/data/whu_tlc.html)
 
 ### About the dataset
 The dataset is public for MVS (Multi-View Stereo) task in satellite domain, which is consisted of the triple-view satellite images, the RPC parameters and the ground-truth DSMs.
@@ -89,14 +97,13 @@ If you find .pfm
 
 If you have found our work useful or if you have used our dataset in your work, please cite our article:
 
-@InProceedings{Gao_2021_ICCV,
+    @InProceedings{Gao_2021_ICCV,
     author    = {Gao, Jian and Liu, Jin and Ji, Shunping},
     title     = {Rational Polynomial Camera Model Warping for Deep Learning Based Satellite Multi-View Stereo Matching},
     booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
     month     = {October},
     year      = {2021},
     pages     = {6148-6157}
-}
 
 
 
