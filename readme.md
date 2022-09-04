@@ -29,6 +29,10 @@ Some packages are list here:
 ### Data Preparation
 See [WHU_TLC/readme.md](WHU_TLC/readme.md) for more details. And rename the "open_dataset"  to "open_dataset_rpc".
 
+### Pretrain models
+You can download the models at: https://pan.baidu.com/s/1_z_o1ozWryIt7J05l-Rp_w?pwd=xo2p 
+code: xo2p
+
 ### Train
 Train on WHU-TLC dataset using RPC warping:
 
