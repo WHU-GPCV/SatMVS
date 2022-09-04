@@ -1,109 +1,65 @@
-# SatMVS
+# Sat-MVS: Multi-View Stereo Dense Matching Network for Satellite Images
 
-## Code
+Official Implementation of ICCV2020:
+*Rational Polynomial Camera Model Warping for Deep Learning Based Satellite Multi-View Stereo Matching*
 
-The code is still being integrated. We will release it soon.
+![](figs/network.png)
 
-## WHU-TLC dataset
+### Requirements
 
-You can download **WHU-TLC dataset** from [http://gpcv.whu.edu.cn/data/whu_tlc.html](http://gpcv.whu.edu.cn/data/whu_tlc.html)
+For more details, please refer to environment.yaml. And You can simply import this environment from the yaml file via conda:
 
-### About the dataset
-The dataset is public for MVS (Multi-View Stereo) task in satellite domain, which is consisted of the triple-view satellite images, the RPC parameters and the ground-truth DSMs.
- You can download the dataset here: *(a herf to the website)*.
+`conda env create -f environment.yaml`
 
-### About the images
+`conda activate satmvs`
 
-The triple-view images were collected from the TLC camera mounted on the Ziyuan-3 (ZY-3) satellite, a professional satellite for surveying and 3D mapping. The ground resolution of the nadir and the two side-looking images is 2.1 m and 2.5 m, respectively.
+Some packages are list here:
 
-The triple-view images were captured at almost the same time, without the impact of illumination and seasonal changes. 
+| package        | version  |
+| -------------- | -------- |
+| gdal           | 3.3.1    |
+| matplotlib     | 3.4.3    |
+| numpy          | 1.12.5   |
+| tensorboardx   | 2.5      |
+| pytorch        | 1.4.0    |
+| torchvision    | 0.5.0    |
+| numpy-groupies | 0.9.14   |
+| opencv-python  | 4.5.5.62 |
 
-The RPC parameters are already refined in advance to achieve a sub-pixel reprojection accuracy.
+### Data Preparation
+See [WHU_TLC/readme.md](WHU_TLC/readme.md) for more details. And rename the "open_dataset"  to "open_dataset_rpc".
 
-### About the DSM
+### Train
+Train on WHU-TLC dataset using RPC warping:
 
-The ground-truth DSMs were prepared from both high-accuracy LiDAR observations and ground control point (GCP)-supported photogrammetric software.  The DSM is stored as a 5-m resolution regular grid under the WGS-84 geodetic coordinate system and the UTM projection coordinate system.
+`python train.py --mode="train" --model="red" --geo_model="rpc" --dataset_root=[Your dataset root] --batch_size=1 --min_interval=[GSD(resolution of the image)] --gpu_id="0"`
 
-### About the coordinate system
+Train on WHU-TLC dataset using homography warping:
 
-Please **Note** that, the coordinate system has been adjusted to other planets (which means that the coordinate system is non-real). Thus the public DEM (such as SRTM) and the DSM we provide here are completely out of alignment, but the provided DSM can be processed just like the UTM projection.
+`python train.py --mode="train" --model="red" --geo_model="pinhole" --dataset_root=[Your dataset root] --batch_size=1 --min_interval=[GSD(resolution of the image)] --gpu_id="0"`
 
-The projection parameters for the data are listed here:
+### Predict
+If you want to predict your own dataset, you need to If you want to predict on your own dataset, you need to first organize your dataset into a folder similar to the WHU-TLC dataset. And then run:
 
-| **Ellipsoid a**                | **6378137.0**     |
-| ------------------------------ | ----------------- |
-| **Ellipsoid inv_f**            | **298.257223563** |
-| **Latitude of natural origin** | **0**             |
-| **Central Meridian**           | **-135**          |
-| **scale factor**               | **0.9996**        |
-| **False Easting**              | **500000**        |
-| **False Northing**             | **0**             |
+`python predict.py --model="red" --geo_model="rpc" --dataset_root=[Your dataset] --loadckpt=[A checkpoint]`
 
-### What are them?
-
-You can find 3 folders in the dataset: Open, open_dataset and open_dataset_pinhole.
-
-##### Open
-
-This is the first version of the WHU-TLC SatMVS dataset.  It's a collection of large-size satellite images(5120x5120 pixels) with RPC parameters and DSM. It's perfect to do a complete assessment of your pipeline on DSM using this version of dataset.
-
---Image: 
-
----- jpg: visualization of the image
-
----- tif: the image
-
----- rpc: the RPC parameters
-
--- DSM:
-
----- jpg: visualization of the DSM
-
----- tif: the DSM
-
----- tfw: tfw file for the DSM
-
-#### open_dataset
-
-This is the second version of the WHU-TLC SatMVS dataset.  It's a ready-made version for the training and testing of a learning method with mainstream GPU capacity.
-
--- height: the height maps.
-
--- image: the image patches.
-
--- rpc: the RPC parameters for the image patches.
-
-** 0, 1 and 2 represents the three views respectively.
-
-#### open_dataset_pinhole
-
-This is an accessary version of the WHU-TLC SatMVS dataset. We fitted each image patch with the RPC projection into pin-hole projection according to [1] under the UTM coordinate system.
-
--- depth: the depth maps.
-
--- image: the image patches after Skew correction.
-
--- camera: the fitted camera parameters for the image patches.
-
-** 0, 1 and 2 represents the three views respectively.
-
-[1] Kai Zhang, Noah Snavely, and Jin Sun. Leveraging vision reconstruction pipelines for satellite imagery. In Proceedings of the IEEE/CVF International Conference on Computer Vision Workshops, pages 2139-2148, 2019.
-
-### PFM file
-
-If you find .pfm
-
-### Cite
-
-If you have found our work useful or if you have used our dataset in your work, please cite our article:
-
-    @InProceedings{Gao_2021_ICCV,
-    author    = {Gao, Jian and Liu, Jin and Ji, Shunping},
+### Citation
+If you find this work helpful, please cite our work:
+@InProceedings{Sat_MVS,
+    author    = {Gao, Jian and Liu, Jin and Ji, Shunping},>
     title     = {Rational Polynomial Camera Model Warping for Deep Learning Based Satellite Multi-View Stereo Matching},
     booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
     month     = {October},
     year      = {2021},
     pages     = {6148-6157}
+}
 
+### Acknowledgements
+Thanks to the authors of UCS-Net, Cas-MVSNet, and VisSat (adapted COLMAP) for open sourcing their fantastic projects. You may want to visit these projects at:
 
+https://github.com/touristCheng/UCSNet
+
+https://github.com/alibaba/cascade-stereo
+
+https://github.com/Kai-46/VisSatSatelliteStereo
 
